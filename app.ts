@@ -1,11 +1,13 @@
+import { ethers } from "ethers"
+// import { hre } from 'hardhat';
+
 /* 1. expressモジュールをロードし、インスタンス化してappに代入。*/
-var express = require("express");
+import express from 'express';
 var app = express();
 
 /* 2. listen()メソッドを実行して3001番ポートで待ち受け。*/
-var server = app.listen(3001, function(){
-    console.log("Node.js is listening to PORT:" + server.address().port);
-});
+
+app.listen(3001, () => console.log(`Server is running at 3001`));
 
 /* 3. 以後、アプリケーション固有の処理 */
 
@@ -35,3 +37,8 @@ app.get("/api/photo/list", function(req, res, next){
 app.get("/", function(req, res, next){
     res.render("index", {});
 });
+
+// TODO alchemy
+const rpc = '';
+const provider = new ethers.providers.JsonRpcProvider(rpc);
+console.log("provider:", provider)
