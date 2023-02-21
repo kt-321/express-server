@@ -12,6 +12,9 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 var app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// app.use(httpLogger);
 
 /* 2. listen()メソッドを実行して3001番ポートで待ち受け。*/
 
@@ -49,7 +52,6 @@ app.get("/", function(req, res, next){
     res.render("index", {});
 });
 
-// app.get("/mint", mint);
 
 const rpc = process.env.RPC_URL || '';
 const provider = new ethers.providers.JsonRpcProvider(rpc);
@@ -88,8 +90,7 @@ const mint = async(req: Request, res: Response) => {
     const request:MintRequest = req.body; // TODO
     const {contract, signer} = await getContractAndSigner();
 
-    // type DataMint = ERC20K.MintRe
-    // const data = ERC20K.
+    console.log("req.body:", req.body)
 
     const txRequest = await contract.populateTransaction.mint(
         request.to,
@@ -101,5 +102,11 @@ const mint = async(req: Request, res: Response) => {
     res.send(receipt.hash);
 }
 
-// mint()
+const webhook =async (req: Request, res: Response) => {
+    console.log(">>>webhook req:", req)
+}
+
+app.post("/mint", mint);
+
+app.post("/webhook", webhook);
 

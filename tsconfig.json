@@ -7,6 +7,16 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "files": ["./hardhat.config.ts"],
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    // same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
+    "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true
+    },
+    "include": ["./test", "./scripts"],
+    "files": ["./hardhat.config.ts"]
+  },
+  // "files": ["./hardhat.config.ts"],
   // "include":
 }
